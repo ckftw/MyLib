@@ -2,25 +2,25 @@ const mongoose = require('mongoose')
 const Book = require('./book')
 
 const authorSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
-        required : true
+        required: true
     }
 })
 
-authorSchema.pre('remove', function(next){
+authorSchema.pre('remove', function (next) {
     Book.find({
-        author:this.id
+        author: this.id
     },
-    (err,book)=>{
-        if(err){
-            next(err)
-        }else if(book.length>0){
-            next(new Error('This author has book still'))
-        } else{
-            next()
-        }
-    })
+        (err, book) => {
+            if (err) {
+                next(err)
+            } else if (book.length > 0) {
+                next(new Error('This author has book still'))
+            } else {
+                next()
+            }
+        })
 
 })
 
